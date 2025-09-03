@@ -96,7 +96,7 @@ char	**ft_split(char const *s, char c)
 	while (i < nb_strs)
 	{
 		ft_get_next_str(&next_str, &next_str_len, c);
-			tab[i] = (char *)malloc(sizeof(char) * (next_str_len + 1));
+		tab[i] = (char *)malloc(sizeof(char) * (next_str_len + 1));
 		if (!tab)
 			return (ft_malloc_error(tab));
 		ft_strlcpy(tab[i], next_str, next_str_len + 1);
