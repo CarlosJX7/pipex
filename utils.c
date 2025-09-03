@@ -23,7 +23,7 @@ int	ft_get_fd(char *ruta, int modo)
 		fd = open(ruta, O_WRONLY | O_TRUNC | O_CREAT, 0664);
 	if (fd == -1)
 	{
-		perror("ft_get_fd");
+		perror("pipex: error opening file");
 		return (-1);
 	}
 	return (fd);
