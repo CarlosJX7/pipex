@@ -32,6 +32,8 @@ void	ft_exec(char *cmd1, char **env)
 	char	*ruta;
 
 	comandos = ft_split(cmd1, ' ');
+	if (!cmd1)
+		exit(1);
 	ruta = ft_get_path(comandos[0], env);
 	if (!ruta)
 	{
