@@ -11,8 +11,8 @@ int ft_get_fd(char *ruta, int modo)
 		fd = open(ruta, O_WRONLY | O_TRUNC | O_CREAT, 0664);
 	if (fd == -1)
 	{
-		perror("Errorr opening file");
-		exit(-1);
+		perror("ft_get_fd");
+		return(-1);
 	}
 	return fd;
 }
@@ -22,6 +22,11 @@ void ft_free_array(char **array)
 	int i;
 
 	i = 0;
+	if (!array)
+	{
+		return ;
+	}
+	
 	while (array[i])
 	{
 		free(array[i]);
@@ -80,5 +85,5 @@ char	*ft_get_path(char *cmd, char **env)
 	}
 	ft_free_array(rutas_array);
 	ft_free_array(comandos);
-	return (cmd);
+	return (NULL);
 }
