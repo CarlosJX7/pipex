@@ -12,6 +12,13 @@
 
 #include "pipex.h"
 
+void	ft_error_exit(char **comandos)
+{
+	ft_putstr_fd("pipex: command not found: ", 2);
+	ft_putendl_fd(comandos[0], 2);
+	ft_free_array(comandos);
+}
+
 int	ft_get_fd(char *ruta, int modo)
 {
 	int	fd;

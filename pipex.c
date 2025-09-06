@@ -31,15 +31,18 @@ void	ft_exec(char *cmd1, char **env)
 	char	**comandos;
 	char	*ruta;
 
-	comandos = ft_split(cmd1, ' ');
-	if (!cmd1)
+	if (!cmd1 || cmd1[0] == '\0')
 		exit(1);
+	comandos = ft_split(cmd1, ' ');
+	if (!comandos || !comandos[0])
+	{
+		ft_free_array(comandos);
+		exit(127);
+	}
 	ruta = ft_get_path(comandos[0], env);
 	if (!ruta)
 	{
-		ft_putstr_fd("pipex: command not found: ", 2);
-		ft_putendl_fd(comandos[0], 2);
-		ft_free_array(comandos);
+		ft_error_exit(comandos);
 		exit(127);
 	}
 	if (execve(ruta, comandos, env) == -1)
@@ -64,13 +67,17 @@ void	ft_proceso_hijo(char **argv, char **env, int *pipe_fd)
 	cmd1 = argv[2];
 	fd = ft_get_fd(fichero, 0);
 	if (fd == -1)
-		valor_devuelto = 1;
+	{
+		close(pipe_fd[0]);
+		close(pipe_fd[1]);
+		close(fd);
+		exit(1);
+	}
 	else
 	{
 		dup2(fd, STDIN_FILENO);
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[0]);
-		close(pipe_fd[1]);
 		close(fd);
 		ft_exec(cmd1, env);
 	}
@@ -86,6 +93,9 @@ void	ft_proceso_padre(char **argv, char **env, int *pipe_fd)
 	fd = ft_get_fd(argv[4], 1);
 	if (fd == -1)
 	{
+		close(pipe_fd[0]);
+		close(pipe_fd[1]);
+		close(fd);
 		perror("pipex: opening file");
 		exit(1);
 	}

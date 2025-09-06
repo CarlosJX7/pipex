@@ -16,6 +16,9 @@ $(NAME): $(OBJS) $(LIBFT)
 $(LIBFT):
 	make -C libft
 
+pipex.o: pipex.h
+utils.o: pipex.h
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 

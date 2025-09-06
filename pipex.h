@@ -27,4 +27,6 @@ int		ft_get_fd(char *ruta, int modo);
 char	*ft_get_path(char *cmd, char **env);
 char	*ft_get_env(char *env[], char *variable_entorno);
 void	ft_free_array(char **array);
+void	ft_error_exit(char **comandos);
+
 #endif
